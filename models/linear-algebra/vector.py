@@ -40,3 +40,6 @@ if __name__ == '__main__':
 
 
     assert dot([1, 2, 3], [4, 5, 6]) == 32
+
+    def sum_of_squares(v: Vector) -> float:
+        return dot(v, v)

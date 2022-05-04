@@ -133,3 +133,21 @@ def covariance(x, y: List[float]) -> float:
 
 assert 22.42 < covariance(num_friends, daily_minutes) < 22.43
 assert 22.42 / 60 < covariance(num_friends, daily_hours) < 22.43 / 60
+
+
+# 相关系数，用协方差除以两个因素的标准差。总有些东西在我脑子里绕来绕去，就像是以前学的东西要冒出来了一样
+# 取相关性系数有两个因素
+# 一是协方差单位不利于理解
+# 二是协方差并不能很好的展示度量效果
+def correlation(x, y: List[float]) -> float:
+    """计算x与y的均值相差多少"""
+    stdev_x = standard_deviation(x)
+    stdev_y = standard_deviation(y)
+    if stdev_x > 0 and stdev_y > 0:
+        return covariance(x, y) / stdev_x / stdev_y
+    else:
+        return 0
+
+
+assert 0.24 < correlation(num_friends, daily_minutes) < 0.25
+assert 0.24 < correlation(num_friends, daily_hours) < 0.25

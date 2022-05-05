@@ -160,3 +160,7 @@ daily_hours_good = [dm / 60 for dm in daily_minutes_good]
 
 assert 0.57 < correlation(num_friends_good, daily_minutes_good) < 0.58
 assert 0.57 < correlation(num_friends_good, daily_hours_good) < 0.58
+
+# 辛普森悖论，是指在分析数据时可能发生的意外，具体而言，当混杂变量被忽略时，相关性系数就会产生误导性。
+# 所以当我们想用相关性系数来作为变量间的关系的衡量时，其他条件必须相同
+# 另外相关性系数为0仅表示两者无线性关系，除此之外没有别的意义

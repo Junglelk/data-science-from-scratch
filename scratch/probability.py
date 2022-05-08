@@ -1,6 +1,7 @@
 import enum, random
 import math
 import matplotlib.pyplot as plt
+from collections import Counter
 
 
 # 条件概率
@@ -165,6 +166,7 @@ def inverse_normal_cdf(p: float, mu=0, sigma=1, tolerance: float = 0.00001) -> f
             hi_z = mid_z
     return mid_z
 
+
 # 中心极限定理 central limit theorem
 # 中心极限定理表示，一个随机变量定义为大量独立同分布的随机变量的均值，它本身就是接近于正态分布的。
 # 具体来说，如果x1,x2,...,xn是均值 μ，标准差 σ 的随机变量，那么当 n 很大时，有：
@@ -173,3 +175,40 @@ def inverse_normal_cdf(p: float, mu=0, sigma=1, tolerance: float = 0.00001) -> f
 #                       ((x1+...+xn)-μn)/σ√n
 # 此结果近似于正态分布，且均值为 0 ，标准差为 1
 
+# 下面通过一个小栗子来说明中心极限定理
+# 以一个有 n 和 p 两个参数的二项式 binomial 随机变量为例。
+# 二项式随机变量Binomial(n,p) 是 n 个独立伯努利(p) 随机变量的总和，每个伯努利随机变量等于 1 的概率为 p ，等于 0 的概率为 1-p：
+def bernoulli_trial(p: float) -> int:
+    """返回 1 的概率为 p ，返回 0 的概率为 1-p """
+    return 1 if random.random() < p else 0
+
+
+def binomial(n: int, p: float) -> int:
+    """返回 n 个伯努利(p)试验结果的和"""
+    return sum(bernoulli_trial(p) for _ in range(n))
+
+
+# 伯努利随机变量的均值是p，标准差是√(p(1-p))，中心极限定理表明，当 n 变大时，二项式随机变量Binomial(n,p) 近似为正态分布的随机变量，
+# 其中均值 μ = np ，标准差 σ = √(np(1-p))
+
+def binomial_histogram(p: float, n: int, num_points: int) -> None:
+    """在一个Binomial(n,p)分布中取点，并绘制直方图"""
+    data = [binomial(n, p) for _ in range(num_points)]
+
+    # 用条形图画出实际的二项式样本
+    histogram = Counter(data)
+    plt.bar([x - 0.4 for x in histogram.keys()],
+            [v / num_points for v in histogram.values()],
+            0.8,
+            color='0.75')
+    mu = p * n
+    sigma = math.sqrt(n * p * (1 - p))
+    # 用线型图画出正态近似
+    xs = range(min(data), max(data))
+    ys = [normal_cdf(i + 0.5, mu, sigma) - normal_cdf(i - 0.5, mu, sigma) for i in xs]
+    plt.plot(xs, ys)
+    plt.title("Binomial Distribution vs. Normal Approximation")
+    plt.show()
+
+
+binomial_histogram(0.75, 100, 10000)

@@ -212,3 +212,8 @@ def binomial_histogram(p: float, n: int, num_points: int) -> None:
 
 
 binomial_histogram(0.75, 100, 10000)
+
+# 这样近似的实际意义是，如果想知道掷一枚均匀的硬币100次，正面向上超过 60 次的概率，那么可以通过正态分布Normal(50,5)的随机变量大于60的概率来估计，
+# 这比计算二项分布Binomial(100,0.5)的累积分布函数要简单。
+# 当然实际应用中，统计软件可以替代这部分工作。
+# scipy.stats包含大多数常见概率密度函数和累计分布函数

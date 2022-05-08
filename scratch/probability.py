@@ -148,7 +148,7 @@ plt.show()
 
 
 # 逆运算正态分布函数
-# 通过逆运算来找到对应的特定概率的值，由于normal_cdf是连续的并且严格递增，所以可以使用二分查找来实现：
+# 通过逆运算来找到对应的特定概率的值，由于normal_cdf是连续的并且严格递增，所以可以使用二分查找来实现（突然想到这不就是传说中的查表法么）：
 def inverse_normal_cdf(p: float, mu=0, sigma=1, tolerance: float = 0.00001) -> float:
     """使用二分查找来得到近似值"""
     mid_z = 0.0
@@ -164,3 +164,12 @@ def inverse_normal_cdf(p: float, mu=0, sigma=1, tolerance: float = 0.00001) -> f
         else:
             hi_z = mid_z
     return mid_z
+
+# 中心极限定理 central limit theorem
+# 中心极限定理表示，一个随机变量定义为大量独立同分布的随机变量的均值，它本身就是接近于正态分布的。
+# 具体来说，如果x1,x2,...,xn是均值 μ，标准差 σ 的随机变量，那么当 n 很大时，有：
+#                       (x1+...+xn)/n
+# 近似正态分布，且均值为 μ ，标准差为 σ / √n 。等价于
+#                       ((x1+...+xn)-μn)/σ√n
+# 此结果近似于正态分布，且均值为 0 ，标准差为 1
+

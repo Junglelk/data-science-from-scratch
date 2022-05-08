@@ -1,4 +1,6 @@
 import enum, random
+import math
+import matplotlib.pyplot as plt
 
 
 # 条件概率
@@ -97,3 +99,49 @@ def uniform_cdf(x: float) -> float:
         return x
     else:
         return 1
+
+
+# 正态分布
+# 钟形曲线分布（os：传说中的万物之理），仅由两个参数决定其形态：均值μ和标准差σ
+# 均值表示曲线的中心位置，标准差表示曲线的宽度。
+# 正态分布的概率密度函数
+
+SQRT_TWO_PI = math.sqrt(2 * math.pi)
+
+
+def normal_pdf(x: float, mu: float = 0, sigma: float = 1) -> float:
+    return math.exp(-(x - mu) ** 2 / 2 / sigma ** 2) / (SQRT_TWO_PI * sigma)
+
+
+# 多个正态分布的概率密度函数
+xs = [x / 10.0 for x in range(-50, 50)]
+plt.plot(xs, [normal_pdf(x, sigma=1) for x in xs], '-', label='mu=0,sigma=1')
+plt.plot(xs, [normal_pdf(x, sigma=2) for x in xs], '--', label='mu=0,sigma=2')
+plt.plot(xs, [normal_pdf(x, sigma=0.5) for x in xs], ':', label='mu=0,sigma=0.5')
+plt.plot(xs, [normal_pdf(x, mu=-1) for x in xs], '-.', label='mu=-1,sigma=1')
+plt.legend()
+plt.title("Various Normal pdfs")
+
+plt.show()
+
+
+# 当 μ = 0 且 σ = 1 时，称为标准正态分布 standard normal distribution，如果Z是服从标准正态分布的随机变量，那么会有如下关系：
+#                                   X = σX + μ
+# 其中 X 是正态分布，但均值是 μ ，标准差是 σ。相反，如果 X 是有均值 μ 和标准差 σ 的正态随机变量，则：
+#                                   Z = (X - μ) / σ
+# 是标准正态分布的随机变量
+
+# 正态分布的累积分布函数不能用"基本"的方式编写 <- 实际上就是不能用初等函数表示，俗称“积不出”。但可以用误差函数math.erf编写：
+def normal_cdf(x: float, mu: float = 0, sigma: float = 1) -> float:
+    return (1 + math.erf((x - mu) / math.sqrt(2) / sigma)) / 2
+
+
+# 多个正态分布的累积分布函数
+xs = [x / 10.0 for x in range(-50, 50)]
+plt.plot(xs, [normal_cdf(x, sigma=1) for x in xs], '-', label="mu = 0,sigma = 1")
+plt.plot(xs, [normal_cdf(x, sigma=2) for x in xs], '--', label='mu = 0,sigma = 2')
+plt.plot(xs, [normal_cdf(x, sigma=0.5) for x in xs], ':', label='mu = 0,sigma = 0.5')
+plt.plot(xs, [normal_cdf(x, mu=-1, sigma=1) for x in xs], '-.', label='mu = -1,sigma = 1')
+plt.legend(loc=4)  # 底部右边
+plt.title("Various Normal cdfs")
+plt.show()

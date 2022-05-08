@@ -76,4 +76,24 @@ print(disease_rate(D, T))
 # Google了一下，白癜风的误诊率约为 72%，而白癜风世界发病率为 0.5%，那么一个人被诊断为白癜风后，确实患有白癜风的概率为：
 print("患白癜风概率为")
 print(disease_rate(0.005, 1 - 0.72))
+
+
 # 当然，这仅仅是概率
+
+# 概率密度函数 Probability Density Function
+# 当区间连续时，使用连续分布的概率密度函数来表示区间内某个值的概率，这个概率即为该区间内的概率密度函数的积分。
+# 均匀分布的概率密度函数
+def uniform_pdf(x: float) -> float:
+    return 1 if 0 <= x < 1 else 0
+
+
+# 累积分布函数 Cumulative Distribution Function
+# CDF给出了一个随机变量小于或等于某个特定值的概率。
+# 均匀分布的累积分布函数
+def uniform_cdf(x: float) -> float:
+    if x < 0:
+        return 0
+    elif x < 1:
+        return x
+    else:
+        return 1

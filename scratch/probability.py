@@ -145,3 +145,22 @@ plt.plot(xs, [normal_cdf(x, mu=-1, sigma=1) for x in xs], '-.', label='mu = -1,s
 plt.legend(loc=4)  # 底部右边
 plt.title("Various Normal cdfs")
 plt.show()
+
+
+# 逆运算正态分布函数
+# 通过逆运算来找到对应的特定概率的值，由于normal_cdf是连续的并且严格递增，所以可以使用二分查找来实现：
+def inverse_normal_cdf(p: float, mu=0, sigma=1, tolerance: float = 0.00001) -> float:
+    """使用二分查找来得到近似值"""
+    mid_z = 0.0
+    if mu != 0 or sigma != 1:
+        return mu + sigma * inverse_normal_cdf(p, tolerance=tolerance)
+    low_z = -10.0  # normal_cdf(-10) 非常接近 0
+    hi_z = 10.0  # normal_cdf(10) 非常接近 1
+    while hi_z - low_z > tolerance:
+        mid_z = (low_z + hi_z) / 2
+        mid_p = normal_cdf(mid_z)
+        if mid_p < p:
+            low_z = mid_z
+        else:
+            hi_z = mid_z
+    return mid_z

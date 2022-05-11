@@ -66,6 +66,7 @@ def normal_two_sided_bounds(probability: float, mu: float = 0, sigma: float = 1)
     lower_bound = normal_lower_bound(tail_probability, mu, sigma)
     return lower_bound, upper_bound
 
+
 # 看完上面的东西，突然意识到不知道 z值是什么东西，于是去搜了一下：
 # Z 值是 Z 检验的检验统计量，它度量观测到的统计量与假设总体参数之间的差值，以标准差为单位。
 # 例如，一系列工厂模具的平均深度为 10 厘米，标准差为 1 厘米。深度为 12 厘米的模具的 Z 值为 2，因为它的深度比均值大两个标准差；
@@ -75,3 +76,8 @@ def normal_two_sided_bounds(probability: float, mu: float = 0, sigma: float = 1)
 # 例如，要了解另一组模具的平均深度是否也为 10 厘米。度量第二组中每个模具的深度，并计算组的平均深度。
 # A 1 样本 Z 检验计算 -1.03 的 Z 值。可选择值为 0.05 的 α，这将产生临界值 1.96。
 # 由于 Z 值的绝对值小于 1.96，因此不能拒绝原假设，并且不能断定模具的平均深度不是 10 厘米。
+
+mu_0, sigma_0 = normal_approximation_to_binomial(1000, 0.5)
+
+print(mu_0)
+print(sigma_0)

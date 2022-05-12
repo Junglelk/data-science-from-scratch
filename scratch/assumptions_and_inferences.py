@@ -79,8 +79,14 @@ def normal_two_sided_bounds(probability: float, mu: float = 0, sigma: float = 1)
 
 mu_0, sigma_0 = normal_approximation_to_binomial(1000, 0.5)
 
-print(mu_0)
-print(sigma_0)
+print(mu_0)  # mu_0 为500
+print(sigma_0)  # sigma_0 为 15.8
 
 # 写到这里时发现运行报错 cannot import name 'ft2font' from...
 # 执行python -m pip install -I matplotlib 强制安装 matplotlib 后好了（在IDE内部似乎又更新了一遍）
+
+# 需要对显著性 significance 下定义以避免第一类错误（“假阳性”），即拒绝了H0，而实际上 H0 为真。
+# 如果我们有5%的可能性错判，则 X 应当的区间是(469,531)，在区间外时，拒绝原假设H0。小提示，X 是指正面朝上的概率
+lower_bound, upper_bound = normal_two_sided_bounds(0.95, mu_0, sigma_0)
+print(lower_bound)  # 531
+print(upper_bound)  # 469

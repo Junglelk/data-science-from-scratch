@@ -81,3 +81,6 @@ mu_0, sigma_0 = normal_approximation_to_binomial(1000, 0.5)
 
 print(mu_0)
 print(sigma_0)
+
+# 写到这里时发现运行报错 cannot import name 'ft2font' from...
+# 执行python -m pip install -I matplotlib 强制安装 matplotlib 后好了（在IDE内部似乎又更新了一遍）

@@ -36,7 +36,7 @@ def normal_probability_above(lo: float, mu: float = 0, sigma: float = 1) -> floa
 # 如果它小于hi，但大于等于lo
 def normal_probability_between(lo: float, hi: float, mu: float = 0, sigma: float = 1) -> float:
     """一个N(mu,sigma)分布在lo和hi之间的概率"""
-    return normal_cdf(hi, mu, sigma) - normal_cdf(lo, mu, sigma)
+    return normal_cdf(lo, mu, sigma) - normal_cdf(hi, mu, sigma)
 
 
 # 如果不在区间之内，就在区间之外
@@ -90,3 +90,18 @@ print(sigma_0)  # sigma_0 为 15.8
 lower_bound, upper_bound = normal_two_sided_bounds(0.95, mu_0, sigma_0)
 print(lower_bound)  # 531
 print(upper_bound)  # 469
+
+# 若p真的等于0.5 则，我们只有5%的概率观察倒一个位于这个区间之外的X。换句话说，若H0为真，则20次观测大约有19次可以得到正确结果。
+# 第二类错误，“假阴性”，即零假设为假，但我们没能拒绝H0。我们称犯第二种错误的概率为“势”。
+# 在探究势之前，我们必须知道 H0 为假究竟是什么意思。零假设为 p 为 0.5。如果仅仅说 p 不为 0.5 不能提供足够的信息。
+
+# 当p是0.5时 95% 的边界
+lo, hi = normal_two_sided_bounds(0.95, mu_0, sigma_0)
+
+# 当 p 是 0.55 时的真实mu 和 sigma
+mu_1, sigma_1 = normal_approximation_to_binomial(1000, 0.55)
+
+type_2_probability = normal_probability_between(lo, hi, mu_1, sigma_1)
+power = 1 - type_2_probability
+print("power")
+print(power)  # 0.887

@@ -115,3 +115,6 @@ hi = normal_upper_bound(0.95, mu_0, sigma_0)
 type_2_probability = normal_probability_below(hi, mu_1, sigma_1)
 power = 1 - type_2_probability
 print(power)  # 0.936
+
+# 这是一个更有效的检验，因为当 X 小于 469 时不再拒绝 H0 (如果 H1 为真，这种情况就太可能发生)，
+# 当 X 在 526 和 531 之间时拒绝H0(如果 H1 为真，则很有可能发生这种情况)。

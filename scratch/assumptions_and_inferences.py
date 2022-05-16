@@ -105,3 +105,13 @@ type_2_probability = normal_probability_between(lo, hi, mu_1, sigma_1)
 power = 1 - type_2_probability
 print("power")
 print(power)  # 0.887
+
+# 假设零假设是掷硬币不偏正面朝上，即 p <= 0.5。这种情况下，需要使用单边检验 one-side test。当 X 远大于500时拒绝原假设，但 X 小于 500 时不拒绝原假设。
+# 因此，5%显著性检验需要使用 normal_probability_below 找到低于 95% 概率对应的截点
+
+hi = normal_upper_bound(0.95, mu_0, sigma_0)
+# 是 526 (< 531 因为在上尾部需要更多的概率)
+
+type_2_probability = normal_probability_below(hi, mu_1, sigma_1)
+power = 1 - type_2_probability
+print(power)  # 0.936

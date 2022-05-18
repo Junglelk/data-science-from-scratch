@@ -116,6 +116,7 @@ type_2_probability = normal_probability_below(hi, mu_1, sigma_1)
 power = 1 - type_2_probability
 print(power)  # 0.936
 
+
 # 这是一个更有效的检验，因为当 X 小于 469 时不再拒绝 H0 (如果 H1 为真，这种情况就太可能发生)，
 # 当 X 在 526 和 531 之间时拒绝H0(如果 H1 为真，则很有可能发生这种情况)。
 
@@ -123,3 +124,22 @@ print(power)  # 0.936
 # p值
 # P值（P value）就是当原假设为真时，比所得到的样本观察结果更极端的结果出现的概率。这是百度百科中的解释，而本书中，如下叙述p值：
 # 我们不是根据某个概率截点选择临界值，而是计算概率：假设H0为真，则我们可以找到一个至少与实际观测到的值一样极端的值。
+# 对于硬币是否均匀的双面检验，做以下运算
+def two_side_p_value(x: float, mu: float = 0, sigma: float = 1) -> float:
+    """
+    如果数值来自于N(mu,sigma)，那么得到一个至少与x极限接近的值（在任意方向上）的可能性有多大
+    :param x:
+    :param mu:
+    :param sigma:
+    :return:
+    """
+    if x >= mu:
+        # 如果 x 大于均值，tail代表所有比x大的数
+        return 2 * normal_probability_above(x, mu, sigma)
+    else:
+        # 如果 x 小于均值，tail代表所有比x小的数
+        return 2 * normal_probability_below(x, mu, sigma)
+
+
+# 如果要观测到530次正面朝上，需要这么计算
+print(two_side_p_value(529.5, mu_0, sigma_0))  # 0.062

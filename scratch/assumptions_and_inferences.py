@@ -143,3 +143,6 @@ def two_side_p_value(x: float, mu: float = 0, sigma: float = 1) -> float:
 
 # 如果要观测到530次正面朝上，需要这么计算
 print(two_side_p_value(529.5, mu_0, sigma_0))  # 0.062
+
+# 连续校正 continuity correction 关于连续校正的说明如右 → https://www.statisticshowto.com/what-is-the-continuity-correction-factor/
+# 用于精确拟合离散变量到连续变量上。所以529.5是比530更好的估计。

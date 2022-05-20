@@ -4,6 +4,7 @@
 
 from typing import Tuple
 import math
+import random
 
 # 实例：掷硬币
 # 假设有一枚硬币，我们想测试它是否均匀。假设掷硬币正面向上的概率为p，零假设是硬币均匀，即 p = 0.5,替代假设p != 0.5。
@@ -146,3 +147,24 @@ print(two_side_p_value(529.5, mu_0, sigma_0))  # 0.062
 
 # 连续校正 continuity correction 关于连续校正的说明如右 → https://www.statisticshowto.com/what-is-the-continuity-correction-factor/
 # 用于精确拟合离散变量到连续变量上。所以529.5是比530更好的估计。
+
+extreme_value_count = 0
+for _ in range(1000):
+    # sum 内的函数就是在模拟掷1000次硬币
+    num_heads = sum(1 if random.random() < 0.5 else 0 for _ in range(1000))
+    if num_heads >= 530 or num_heads <= 470:
+        extreme_value_count += 1
+# p 值是 0.062 即1000次观测中，极值大约出现62次
+assert 59 < extreme_value_count <= 65, f"{extreme_value_count}"
+
+# 由于6.2% > 5% ，所以不拒绝原假设。如果改为观测到532次正面向上，那么相应的p值为：
+print(two_side_p_value(531.5, mu_0, sigma_0))  # 0.046
+# 小于 5% 的显著性，所以拒绝原假设。
+# 这含义为：观测到532次正面向上的概率为4.6%，而我们假设的正面朝上概率为0.5时出现这么极端的观测值的合理概率（显著性为5%）更低，所以拒绝原假设。
+
+upper_p_value = normal_probability_above
+lower_p_value = normal_probability_below
+# 观测到525次正面朝上
+print(upper_p_value(524.5, mu_0, sigma_0))  # 0.061，接受原假设
+# 观测到527次正面朝上
+print(upper_p_value(526.5, mu_0, sigma_0))  # 0.047，拒绝原价黑色

@@ -167,4 +167,7 @@ lower_p_value = normal_probability_below
 # 观测到525次正面朝上
 print(upper_p_value(524.5, mu_0, sigma_0))  # 0.061，接受原假设
 # 观测到527次正面朝上
-print(upper_p_value(526.5, mu_0, sigma_0))  # 0.047，拒绝原价黑色
+print(upper_p_value(526.5, mu_0, sigma_0))  # 0.047，拒绝原假设
+
+# 上述检测与之前的结果一致，只是计算方式有所不同。
+# 此外，词用normal_probability_above计算p值前，需确保原数据大致符合正态分布。

@@ -11,6 +11,7 @@ import random
 # 使用正态分布拟合二项式随机变量Binomial(n,p)
 from scratch.probability import normal_cdf
 from scratch.probability import inverse_normal_cdf
+from typing import List
 
 
 def normal_approximation_to_binomial(n: int, p: float) -> Tuple[float, float]:
@@ -184,3 +185,26 @@ mu = p_hat
 sigma = math.sqrt(p_hat * (1 - p_hat) / 1000)
 # 可以近似计算出下列区间包含可真实参数p的“可信度有95%”
 print(normal_two_sided_bounds(0.95, mu, sigma))  # (0.4940,0.5560)
+
+
+# p-Hacking
+def run_experiment() -> List[bool]:
+    """翻转均匀硬币1000次，True=正面朝上 ， False=正面朝下"""
+    return [random.random() < 0.5 for _ in range(1000)]
+
+
+def reject_fairness(experiment: List[bool]) -> bool:
+    """使用5%的显著性水平"""
+    # 1000的5%是50，
+    num_heads = len([flip for flip in experiment if flip])
+    return num_heads < 469 or num_heads > 531
+
+
+random.seed(0)
+# 重复进行1000次实验，每次实验掷硬币1000次
+experiments = [run_experiment() for _ in range(1000)]
+num_rejections = len([experiment for experiment in experiments if reject_fairness(experiment)])
+assert num_rejections == 46
+
+# 这表示如果想得到一个具有“显著性”的结果，通常可以重复实验多次，直到达到一个显著性水平。或者删除右边的数据，从而得到一个低于0.05的p值，
+# 这样就达到了符合期望的结果，当然这损害了部分客观性。这有时被成为 p-hacking。详细的可以看 The Earth Is Round , 由Jacob Cohen撰写的一篇文章。

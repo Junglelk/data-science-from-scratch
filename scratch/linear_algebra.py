@@ -1,3 +1,4 @@
+import math
 from typing import List, Tuple
 
 Matrix = List[List[float]]
@@ -63,3 +64,11 @@ assert dot([1, 2, 3], [4, 5, 6]) == 32
 
 def sum_of_squares(v: Vector) -> float:
     return dot(v, v)
+
+
+def distance(v: Vector, w: Vector) -> float:
+    return math.sqrt(sum_of_squares(add(v, w)))
+
+
+def scalar_multiply(c: float, v: Vector) -> Vector:
+    return [c * v_i for v_i in v]

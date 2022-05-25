@@ -10,7 +10,7 @@ import random
 
 from scratch.linear_algebra import Vector, dot
 from typing import Callable
-from scratch.linear_algebra import distance, add, scalar_multiply
+from scratch.linear_algebra import distance, add, scalar_multiply, vector_mean
 
 
 def sum_of_squares(v: Vector) -> float:
@@ -92,3 +92,19 @@ for epoch in range(1000):
 
 assert distance(v, [0, 0, 0]) < 0.001
 print(distance(v, [0, 0, 0]))
+
+# 使用梯度下降拟合模型
+# 使用梯度下降拟合参数化模型到数据，并且使用损失函数来衡量模型与数据的匹配程度
+# 一个简单的线性函数
+inputs = [(x, x * 20 + 5) for x in range(-50, 50)]
+
+
+# 使用梯度下降来找到最小化平方误差的斜率和截距
+def linear_gradient(x: float, y: float, theta: Vector) -> Vector:
+    # 斜率与截距
+    slope, intercept = theta
+    predicted = slope * x + intercept  # 模型的预测结果
+    error = predicted - y  # 残值是(预测值-真实值)
+    squared_error = error ** 2  # 最小化平方误差
+    grad = [2 * error * x, 2 * error]  # 梯度
+    return grad

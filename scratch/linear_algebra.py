@@ -72,3 +72,8 @@ def distance(v: Vector, w: Vector) -> float:
 
 def scalar_multiply(c: float, v: Vector) -> Vector:
     return [c * v_i for v_i in v]
+
+
+def vector_mean(vectors: List[Vector]) -> Vector:
+    n = len(vectors)
+    return scalar_multiply(1 / n, vector_sum(vectors))

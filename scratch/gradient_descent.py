@@ -95,7 +95,7 @@ print(distance(v, [0, 0, 0]))
 
 # 使用梯度下降拟合模型
 # 使用梯度下降拟合参数化模型到数据，并且使用损失函数来衡量模型与数据的匹配程度
-# 一个简单的线性函数
+# 一个简单的线性函数(计算所得的数据集)
 inputs = [(x, x * 20 + 5) for x in range(-50, 50)]
 
 
@@ -106,5 +106,26 @@ def linear_gradient(x: float, y: float, theta: Vector) -> Vector:
     predicted = slope * x + intercept  # 模型的预测结果
     error = predicted - y  # 残值是(预测值-真实值)
     squared_error = error ** 2  # 最小化平方误差
-    grad = [2 * error * x, 2 * error]  # 梯度
+    grad = [2 * error * x, error * 2]  # 梯度
     return grad
+
+
+# 我不能理解的是为什么这样计算梯度。最小化平方误差是为了修正负数带来的比较问题吗？
+# 接下来的流程是
+# 1. 随机初始化theta
+# 2. 计算梯度的均值
+# 3. 沿该方向调整theta
+# 4. 重复上述步骤
+theta = [random.uniform(-1, 1), random.uniform(-1, 1)]
+learning_rate = 0.001
+for epoch in range(100):
+    for x, y in inputs:
+        # 计算梯度的均值
+        grad = vector_mean([linear_gradient(x, y, theta) for x, y in inputs])
+        # 更新参数
+        theta = gradient_step(theta, grad, -learning_rate)
+        print("epoch {}, theta = {},grad = {}".format(epoch, theta, grad))
+
+slope, intercept = theta
+print(slope)
+print(intercept)

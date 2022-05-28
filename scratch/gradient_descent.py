@@ -105,8 +105,8 @@ def linear_gradient(x: float, y: float, theta: Vector) -> Vector:
     slope, intercept = theta
     predicted = slope * x + intercept  # 模型的预测结果
     error = predicted - y  # 残值是(预测值-真实值)
-    squared_error = error ** 2  # 最小化平方误差
-    grad = [2 * error * x, error * 2]  # 梯度
+    squared_error = error ** 2  # 最小化平方误差，损失函数
+    grad = [2 * error * x, error * 2]  # 梯度，梯度是损失函数对slop和intercept的偏导数，最终求的是损失函数的最小值
     return grad
 
 

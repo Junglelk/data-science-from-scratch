@@ -11,6 +11,7 @@ import random
 from scratch.linear_algebra import Vector, dot
 from typing import Callable
 from scratch.linear_algebra import distance, add, scalar_multiply, vector_mean
+from typing import TypeVar, List, Iterator
 
 
 def sum_of_squares(v: Vector) -> float:
@@ -130,3 +131,51 @@ for epoch in range(100):
 slope, intercept = theta
 print(slope)
 print(intercept)
+
+# 小批次梯度下降喝随机梯度下降
+# 小批次梯度下降是一种更加简单的梯度下降算法，它是每次更新参数时，都选择一个小批次的数据来计算梯度的均值。
+
+# 泛型函数
+T = TypeVar('T')
+
+
+def minibatches(dataset: List[T], batch_size: int, shuffle: bool = True) -> Iterator[List[T]]:
+    """
+    小批次梯度下降
+    从数据集中生成batch_size大小的小批数据
+    yield 关键字生成一个迭代器，用于只会使用一次的数据，这样减少内存占用
+    更多的见：https://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do
+    :param dataset: 数据
+    :param batch_size: 每个小批次的大小
+    :param shuffle: 是否打乱数据
+    :return: 小批次
+    """
+    batch_starts = [start for start in range(0, len(dataset), batch_size)]
+    if shuffle:
+        random.shuffle(batch_starts)
+    for start in batch_starts:
+        end = start + batch_size
+        yield dataset[start:end]
+
+
+# 分批梯度下降
+for epoch in range(1000):
+    for batch in minibatches(inputs, batch_size=20):
+        grad = vector_mean([linear_gradient(x, y, theta) for x, y in batch])
+        theta = gradient_step(theta, grad, -learning_rate)
+        print("epoch {}, theta = {}".format(epoch, theta))
+slope, intercept = theta
+print(slope)
+print(intercept)
+
+# 一个变体是随机梯度下降，一次只基于一个训练样本计算梯度。（感觉这个可能更符合一般人对这个的理解）
+for epoch in range(1000):
+    for x, y in inputs:
+        grad = linear_gradient(x, y, theta)
+        theta = gradient_step(theta, grad, -learning_rate)
+    print("epoch {}, theta = {}".format(epoch, theta))
+slope, intercept = theta
+print(slope)
+print(intercept)
+
+# 此外计算整个数据集的梯度通常称之为“批量梯度下降”，小批次梯度下降也有人称之为随机梯度下降。

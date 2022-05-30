@@ -1,0 +1,1 @@
+type ..\README.md | python .\egrep.py "[0-9]" | python .\line_count.py

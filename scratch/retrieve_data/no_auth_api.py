@@ -1,5 +1,4 @@
-import requests, json
-from collections import Counter
+import requests
 from dateutil.parser import parse
 
 github_api_url = "https://api.github.com/users/junglelk"

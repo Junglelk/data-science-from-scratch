@@ -23,4 +23,5 @@ xml_txt = """<Book>
     </topics>
 </Book>"""
 
-beautiful_soup = BeautifulSoup(xml_txt, "xml")  # 看文档上应该是这么写的，但实际会报错，不清楚原因
+beautiful_soup = BeautifulSoup(xml_txt, "xml")  # 看文档上应该是这么写的，但实际会报错，不清楚原因 -> 需要安装lxml
+print(beautiful_soup.find("title").text)

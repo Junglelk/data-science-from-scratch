@@ -19,3 +19,8 @@ PIN_CODE = input('Please enter the PIN CODE: ')
 auth_client = Twython(CONSUMER_KEY, CONSUMER_SECRET,
                       temp_creds['oauth_token'], temp_creds['oauth_token_secret'])
 final_step = auth_client.get_authorized_tokens(PIN_CODE)
+
+ACCESS_TOKEN = final_step['oauth_token']
+ACCESS_TOKEN_SECRET = final_step['oauth_token_secret']
+print(f"ACCESS_TOKEN: {ACCESS_TOKEN}")
+print(f"ACCESS_TOKEN_SECRET: {ACCESS_TOKEN_SECRET}")

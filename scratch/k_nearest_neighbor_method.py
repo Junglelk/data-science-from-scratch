@@ -14,5 +14,5 @@ def raw_majority_vote(labels: List[str]) -> str:
     return winner
 
 
-# k最近邻法，我总想念成“k最邻近法”...
+# k最近邻法，我总想念成“k最邻近法”...虽然这里还不是
 assert raw_majority_vote(['a', 'd', 'b', 'b', 'c', 'c', 'd', 'd']) == 'd'

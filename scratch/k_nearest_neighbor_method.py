@@ -4,6 +4,9 @@
 from typing import List, NamedTuple
 from collections import Counter
 from linear_algebra import distance, Vector
+from typing import Dict
+import csv
+from collections import defaultdict
 
 
 # 假设案例为：住的近的人更容易给同一个人投票
@@ -30,6 +33,7 @@ def majority_vote(labels: List[str]) -> str:
         return majority_vote(labels[:-1])
 
 
+# 这是python的继承机制
 class LabeledPoint(NamedTuple):
     labels: str
     point: Vector

@@ -61,8 +61,8 @@ def estimate_gradient(f: Callable[[Vector], float], v: Vector, h: float = 0.0000
 def gradient_step(v: Vector, gradient: Vector, step_size: float) -> Vector:
     """
     从 v 朝着 ‘gradient’ 方向，前进 step_size 距离
-    :param v: 参数
-    :param gradient: 梯度
+    :param v: 待更新的参数
+    :param gradient: 梯度方向，就是偏导数
     :param step_size: 步长
     :return: 更新后的参数
     """

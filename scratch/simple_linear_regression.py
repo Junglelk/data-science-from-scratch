@@ -36,8 +36,11 @@ def least_squares_fit(x: Vector, y: Vector) -> Tuple[float, float]:
     斜率在这里用的是x，y的相关性系数乘y的标准差，最后除以x的标准差
     截距是y的平均值减去x的平均值乘以斜率
     """
-    beta = correlation(x, y) * standard_deviation(y) / standard_deviation(x)
-    alpha = mean(y) - beta * mean(x)
+    y_bar = mean(y)
+    x_bar = mean(x)
+    beta = sum(x_i * (y_i - y_bar) for x_i, y_i in zip(x, y)) / sum(x_i * (x_i - x_bar) for x_i in x)
+    # correlation(x, y) * standard_deviation(y) / standard_deviation(x)
+    alpha = y_bar - beta * x_bar
     return alpha, beta
 
 

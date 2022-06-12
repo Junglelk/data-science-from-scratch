@@ -1,4 +1,4 @@
-# 一个简单的线性预测函数 y = βx+α+e
+# 描述观测值与实际函数的相关关系 y_i = βx_i+α+e_i
 # 假设描述的是朋友数量 x 和在线时长 y 的关系，e是噪声，代表与真实值的差异（越小越好），其余两个是使线性猜测关系成立的参数
 from typing import Tuple
 from scratch.linear_algebra import Vector

@@ -58,7 +58,7 @@ def least_squares_fit(xs: List[Vector],
             batch_xs = xs[start:start + batch_size]
             batch_ys = ys[start:start + batch_size]
             # 求导
-            # 获取误差函数列表（向量），然后对向量求导
+            # 获取误差函数列表（向量），求误差函数的梯度，并使用梯度的均值作为实际梯度（为什么，减小误差吗，常用的处理方式？）
             gradient = vector_mean([sqerror_gradient(x, y, guess) for x, y in zip(batch_xs, batch_ys)])
             # 梯度下降
             guess = gradient_step(guess, gradient, -learning_rate)

@@ -1,5 +1,6 @@
 # 描述观测值与实际函数的相关关系 y_i = βx_i+α+e_i
 # 假设描述的是朋友数量 x 和在线时长 y 的关系，e是噪声，代表与真实值的差异（越小越好），其余两个是使线性猜测关系成立的参数
+# 回来重看这里，只觉得之前学习时，对细枝末节的东西有点过分执着了
 from typing import Tuple
 from scratch.linear_algebra import Vector
 from scratch.statistics import correlation, standard_deviation, mean, de_mean, num_friends_good, daily_minutes_good
